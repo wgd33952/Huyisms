@@ -1,5 +1,10 @@
 <?php
 namespace Junec\Huyisms;
+
+/**
+ * 互亿无线短信平台SDK
+ * create by June(junechan08@yeah.net)
+ */
 class Huyisms {
 	
 	// 发送短信接口地址
@@ -15,7 +20,6 @@ class Huyisms {
 	private $apikey = '';
 	
 	public function __construct($appid = '', $apikey = '') {
-		parent::__construct();
 		$this->appid = $appid;
 		$this->apikey = $apikey;
 	}
@@ -24,7 +28,7 @@ class Huyisms {
 	 * 发送短息验证码
 	 */
 	public function send($phone, $content) {
-		if ($this->utf8Strlen($phone) !== 11 || !this->isPhone($phone)) {
+		if ($this->utf8Strlen($phone) !== 11 || !$this->isPhone($phone)) {
 			return array('status' => 0, 'msg' => '手机号不正确');
 		}
 		if (!$content) {
@@ -46,10 +50,10 @@ class Huyisms {
 	{
 		$data = "account={$this->appid}&password={$this->apikey}";
 		$result = $this->xmlToArray($this->post($data, $this->query_url));
-		if ($result['SubmitResult']['code'] == 2) {
-			return array('status' => 1, 'msg' => '发送成功', 'data' => 'num' => $result['SubmitResult']['num']);
+		if ($result['GetNumResult']['code'] == 2) {
+			return array('status' => 1, 'msg' => '发送成功', 'data' => array('num' => $result['GetNumResult']['num']));
 		} else {
-			return array('status' => 0, 'msg' => $result['SubmitResult']['msg']);
+			return array('status' => 0, 'msg' => $result['GetNumResult']['msg']);
 		}
 	}
 	
