@@ -24,8 +24,6 @@ class Huyisms {
 	 * 发送短息验证码
 	 */
 	public function send($phone, $content) {
-		$post = $this->input->post();
-		
 		if ($this->utf8Strlen($phone) !== 11 || !this->isPhone($phone)) {
 			return array('status' => 0, 'msg' => '手机号不正确');
 		}
